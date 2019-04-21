@@ -19,6 +19,8 @@
   "homepage": "https://github.com/sofialuisa/SIMPLE_WEB_FORUM#readme",
   "dependencies": {
     "express": "^4.16.4",
+    "mustache": "^3.0.1",
+    "mustache-express": "^1.2.8",
     "pg": "^7.10.0"
   }
 }

@@ -3,6 +3,8 @@ var app = express();
 var bodyParser = require("body-parser");
 const url = require('url');
 const path = require('path');
+var mustacheExpress = require('mustache-express');
+//var request = require('request');
 const PORT = process.env.PORT || 8000;
 var { Client } = require('pg');
 var client = new Client({database: 'simple_web_forum'});
@@ -11,24 +13,36 @@ client.connect();
 
 //Here we are configuring express to use body-parser as middle-ware.
 app.use(bodyParser.urlencoded({ extended: false }));
+app.engine('html', mustacheExpress());
+app.set('view engine', 'html');
+app.set('views', __dirname);
 
-client.query('SELECT simple_web_forum;', (err, res) => {
-  if (err) throw err;
-  for (let column of res.column) {
-    console.log(JSON.stringify(column));
-  }
-  client.end();
+app.get('/', function(req, res1){
+      client.query('SELECT * FROM posts', (err, res2) => {
+        if (err) throw err;
+        for (let row of res2.rows) {
+          console.log(JSON.stringify(row));
+        }
+        let messagesArray = res2.rows;
+        res1.render('index', {
+          messagesArray
+        });
+        // client.end();
+      });
+
 });
 
-app.get('/', function(req, res){
-    var myText = req.query.mytext; //mytext is the name of your input box
+app.post('/post',function (req, res3){
+  var myText = req.body.mytext;
     if (myText === undefined){
-      res.sendFile(path.join(__dirname + '/index.html'))
+      res3.sendFile(path.join(__dirname + '/index.html'))
     }else{
-      // res.send('the band ' + myText + ' is so ' + insults_dict[Math.floor(Math.random(insults_dict)*4)]);
-      res.send(myText);
+      client.query('INSERT INTO posts (message) VALUES (\'' + myText + '\')', function (error, results) {
+      if (error) throw error;
+      res3.redirect('/');
+    });
     }
-});
+})
 
 app.listen(PORT, function() {
 
