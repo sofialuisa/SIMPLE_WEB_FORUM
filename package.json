@@ -1,0 +1,19 @@
+{
+  "name": "simple_web_forum",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sofialuisa/SIMPLE_WEB_FORUM.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sofialuisa/SIMPLE_WEB_FORUM/issues"
+  },
+  "homepage": "https://github.com/sofialuisa/SIMPLE_WEB_FORUM#readme"
+}
