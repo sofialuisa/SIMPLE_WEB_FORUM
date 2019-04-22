@@ -7,9 +7,13 @@ var mustacheExpress = require('mustache-express');
 //var request = require('request');
 const PORT = process.env.PORT || 8000;
 var { Client } = require('pg');
-var client = new Client({database: 'simple_web_forum'});
+var client;
+if (process.env.HEROKU_POSTGRESQL_ROSE){
+  new Client({connectionString: process.env.HEROKU_POSTGRESQL_ROSE, ssl: true});
+} else {
+  new Client({database: 'postgresql-rectangular-19890'});
+}
 client.connect();
-
 
 //Here we are configuring express to use body-parser as middle-ware.
 app.use(bodyParser.urlencoded({ extended: false }));
