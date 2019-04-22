@@ -8,8 +8,8 @@ var mustacheExpress = require('mustache-express');
 const PORT = process.env.PORT || 8000;
 var { Client } = require('pg');
 var client;
-if (process.env.HEROKU_POSTGRESQL_ROSE){
-  new Client({connectionString: process.env.HEROKU_POSTGRESQL_ROSE, ssl: true});
+if (process.env.DATABASE_URL){
+  new Client({connectionString: process.env.DATABASE_URL, ssl: true});
 } else {
   new Client({database: 'postgresql-rectangular-19890'});
 }
